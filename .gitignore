@@ -1,0 +1,43 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# next.js
+.next
+out
+
+# production
+build
+
+# misc
+.DS_Store
+*.pem
+*.p12
+*.cer
+certs/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# env files: secrets never committed (N-04)
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# tests
+coverage
+playwright-report
+test-results
+.local-storage
+test-results-sessions.json
