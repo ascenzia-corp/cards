@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cards
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      # Environnement de test éphémère : aucune clé réelle, aucun e-mail envoyé par les parcours testés.
+      - name: Environnement de test
+        run: |
+          {
+            echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/cards"
+            echo "ADMIN_EMAILS=laurent.fontaine@ascenzia.fr"
+            echo "ALLOWED_EMAIL_DOMAINS=ascenzia.fr,ascenzia.ai"
+            echo "AUTH_SECRET=$(openssl rand -base64 32)"
+            echo "RESEND_API_KEY=ci-no-email"
+            echo "MAIL_FROM=Ascenzia Cards <cards@ascenzia.ai>"
+            echo "PUBLIC_BASE_URL=http://localhost:3000"
+            echo "IP_HASH_SALT=$(openssl rand -hex 16)"
+            echo "LOCAL_STORAGE_DIR=.local-storage"
+          } > .env.local
+      - run: pnpm db:migrate
+      - run: pnpm db:seed
+      - run: pnpm build
+      - run: |
+          pnpm start -p 3000 &
+          for i in $(seq 1 30); do curl -sf http://localhost:3000/robots.txt > /dev/null && break; sleep 1; done
+          pnpm test:e2e
