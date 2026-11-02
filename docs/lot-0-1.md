@@ -64,7 +64,7 @@ respecte. À confirmer en production, où la photo est servie par le CDN Vercel 
 ## Reste à faire avant recette du lot 1
 
 1. Prérequis section 11 : DNS, Apple Developer et certificats, Supabase, Resend, projet Vercel.
-2. Contenus : photo, fonction, téléphone, liens des deux cartes (le seed ne renseigne que nom, e-mail et site).
+2. Contenus : le seed reprend la signature de Laurent (fonction, téléphone, liens, photo ; logo sur la carte personnelle). À vérifier dans l'admin ; l'import de la photo et du logo demande un accès réseau au moment du seed.
 3. Recette sur iPhone réel : R-01 à R-09 et R-15. R-04 et R-06 ne peuvent être validés qu'avec le vrai certificat.
 
 ## Tester à la main
