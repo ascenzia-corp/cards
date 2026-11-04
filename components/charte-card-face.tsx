@@ -36,15 +36,16 @@ export function CharteCardFace({ card }: { card: CardViewModel }) {
       <CharteLogo logoUrl={card.logoUrl} />
       <div className="charte-identity">
         {card.photoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={card.photoUrl}
-            alt={t.public.photoAlt(card.name)}
-            width={88}
-            height={88}
-            fetchPriority="high"
-            className="charte-photo"
-          />
+          <span className="charte-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={card.photoUrl}
+              alt={t.public.photoAlt(card.name)}
+              width={88}
+              height={88}
+              fetchPriority="high"
+            />
+          </span>
         ) : null}
         {card.company ? <p className="charte-label">{card.company}</p> : null}
         <h1 className="charte-name">{card.name}</h1>
