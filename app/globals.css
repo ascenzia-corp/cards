@@ -260,6 +260,21 @@ a.link-row:hover {
   width: 150px;
   height: auto;
 }
+.charte-logo-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 200px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #ebebee;
+}
+.charte-logo-card {
+  display: block;
+  height: 28px;
+  width: auto;
+  max-width: 172px;
+  object-fit: contain;
+}
 .charte-identity {
   margin-top: 64px;
 }

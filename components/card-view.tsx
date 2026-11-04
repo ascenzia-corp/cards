@@ -6,6 +6,7 @@ import { ChevronRight, Mail, MapPin, Phone, UserPlus } from "lucide-react";
 import { brandFontVariables } from "@/lib/fonts";
 import { t } from "@/lib/i18n";
 import type { CardViewModel } from "@/lib/view-model";
+import { CharteCardFace } from "./charte-card-face";
 import { LinkIconFor } from "./link-icon";
 
 export function CardFace({ card, charte = false }: { card: CardViewModel; charte?: boolean }) {
@@ -74,47 +75,6 @@ export function CardFace({ card, charte = false }: { card: CardViewModel; charte
         </p>
       ) : null}
     </article>
-  );
-}
-
-/**
- * Face de carte aux couleurs de la charte Ascenzia (gabarit D1) : logo fond sombre en haut à
- * gauche, nom en League Spartan or, étiquettes en capitales, beaucoup de vide, aucune ombre.
- */
-function CharteCardFace({ card }: { card: CardViewModel }) {
-  return (
-    <header className="charte-face" aria-label={t.public.cardOf(card.name)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/brand/ascenzia-logo-fond-sombre.svg"
-        alt="Ascenzia"
-        width={150}
-        height={45}
-        className="charte-logo"
-      />
-      <div className="charte-identity">
-        {card.photoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={card.photoUrl}
-            alt={t.public.photoAlt(card.name)}
-            width={88}
-            height={88}
-            fetchPriority="high"
-            className="charte-photo"
-          />
-        ) : null}
-        {card.company ? <p className="charte-label">{card.company}</p> : null}
-        <h1 className="charte-name">{card.name}</h1>
-        <span className="charte-rule" aria-hidden="true" />
-        {card.title ? <p className="charte-title">{card.title}</p> : null}
-        {card.tagline ? (
-          <p className="charte-tagline" title={card.tagline}>
-            {card.tagline}
-          </p>
-        ) : null}
-      </div>
-    </header>
   );
 }
 
