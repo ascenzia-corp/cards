@@ -9,6 +9,7 @@ import { preload } from "react-dom";
 import { CardFace, LinkList, PrimaryActions } from "@/components/card-view";
 import { ViewBeacon } from "@/components/view-beacon";
 import { WalletButton } from "@/components/wallet-button";
+import { charteFontVariables } from "../fonts";
 import { getPublicCard } from "@/lib/cards";
 import { publicBaseUrl } from "@/lib/env";
 import { t } from "@/lib/i18n";
@@ -88,27 +89,27 @@ export default async function CardPage({ params }: Props) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-[440px] px-4 pt-[max(16px,env(safe-area-inset-top))] pb-10">
-      <CardFace card={vm} />
-      <PrimaryActions
-        card={vm}
-        walletSlot={
-          <WalletButton
-            slug={card.slug}
-            badgeSrc={process.env.NEXT_PUBLIC_WALLET_BADGE_SRC || null}
-          />
-        }
-      />
-      <LinkList card={vm} />
-      <footer
-        className="mt-8 flex items-center justify-between text-sm"
-        style={{ color: "var(--fg-muted)" }}
-      >
-        <span>{vm.name}</span>
-        <Link href="/mentions" prefetch={false} className="underline underline-offset-2">
-          {t.public.legal}
-        </Link>
-      </footer>
+    <main className={`carte-charte ${charteFontVariables}`}>
+      <div className="carte-charte-inner">
+        <CardFace card={vm} charte />
+        <PrimaryActions
+          card={vm}
+          charte
+          walletSlot={
+            <WalletButton
+              slug={card.slug}
+              badgeSrc={process.env.NEXT_PUBLIC_WALLET_BADGE_SRC || null}
+            />
+          }
+        />
+        <LinkList card={vm} />
+        <footer className="charte-footer">
+          <span>{vm.name}</span>
+          <Link href="/mentions" prefetch={false} className="underline underline-offset-2">
+            {t.public.legal}
+          </Link>
+        </footer>
+      </div>
       <ViewBeacon slug={card.slug} />
       <script
         type="application/ld+json"
