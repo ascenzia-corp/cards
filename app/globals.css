@@ -288,14 +288,11 @@ a.link-row:hover {
   border: 2px solid var(--ch-gold);
   margin-bottom: 32px;
 }
-/* Recadrage centré : masque le fond détouré (disque noir) des photos « sticker » de la signature */
 .charte-photo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.4);
-  transform-origin: 46% 44%;
 }
 .charte-label,
 .carte-charte .eyebrow {
