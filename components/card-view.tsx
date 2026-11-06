@@ -6,10 +6,12 @@ import { ChevronRight, Mail, MapPin, Phone, UserPlus } from "lucide-react";
 import { brandFontVariables } from "@/lib/fonts";
 import { t } from "@/lib/i18n";
 import type { CardViewModel } from "@/lib/view-model";
+import { CharteCardFace } from "./charte-card-face";
 import { LinkIconFor } from "./link-icon";
 
-export function CardFace({ card }: { card: CardViewModel }) {
+export function CardFace({ card, charte = false }: { card: CardViewModel; charte?: boolean }) {
   const { theme } = card;
+  if (charte) return <CharteCardFace card={card} />;
   return (
     <article
       className={`card-face ${theme.brandFonts ? `${brandFontVariables} brand-fonts` : ""}`}
@@ -80,10 +82,12 @@ export function PrimaryActions({
   card,
   interactive = true,
   walletSlot,
+  charte = false,
 }: {
   card: CardViewModel;
   interactive?: boolean;
   walletSlot?: React.ReactNode;
+  charte?: boolean;
 }) {
   const vcardHref = `/api/cards/${card.slug}/vcard`;
   const disabled = interactive
@@ -94,7 +98,7 @@ export function PrimaryActions({
       <a
         href={interactive ? vcardHref : undefined}
         className="btn btn-primary"
-        style={{ background: card.theme.buttonBg, color: card.theme.buttonFg }}
+        style={charte ? undefined : { background: card.theme.buttonBg, color: card.theme.buttonFg }}
         {...disabled}
       >
         <UserPlus aria-hidden="true" size={20} strokeWidth={1.6} />
